@@ -17,14 +17,12 @@ export async function handler(event, context) {
     throw new Error("only default ports permitted");
 
   // Issue the request.
-  const abortController = new AbortController();
   let response;
   try {
     const headers = {
       "Accept": "application/trafficadvice+json",
       "User-Agent": "TrafficAdviceCheckup",
     };
-    const { signal } = abortController;
     response = await fetch(trafficAdviceURL, { headers, redirect: "manual", signal });
   } catch (e) {
     return jsonResponse({ error: "unreachable" });
@@ -50,7 +48,6 @@ export async function handler(event, context) {
       for await (const chunk of response.body) {
         if (chunk.length > buffer.length - offset) {
           info.error = "body too large";
-          abortController.abort();
           break;
         }
         chunk.copy(buffer, offset);
@@ -62,8 +59,6 @@ export async function handler(event, context) {
 
     if (!info.error)
       info.body = buffer.toString('base64', 0, offset);
-  } else {
-    abortController.abort();
   }
 
   return jsonResponse(info);
