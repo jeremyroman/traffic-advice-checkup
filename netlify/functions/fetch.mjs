@@ -23,10 +23,10 @@ export async function handler(event, context) {
       "Accept": "application/trafficadvice+json",
       "User-Agent": "TrafficAdviceCheckup",
     };
-    response = await fetch(trafficAdviceURL, { headers, redirect: "manual", signal });
+    response = await fetch(trafficAdviceURL, { headers, redirect: "manual" });
   } catch (e) {
-    throw e;
-    return jsonResponse({ error: "unreachable " });
+    console.log(e);
+    return jsonResponse({ error: "unreachable" });
   }
 
   // Start gathering info to return to the client.
@@ -55,6 +55,7 @@ export async function handler(event, context) {
         offset += chunk.length;
       }
     } catch (e) {
+      console.log(e);
       info.error = "error reading body";
     }
 
