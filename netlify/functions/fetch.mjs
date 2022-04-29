@@ -25,7 +25,8 @@ export async function handler(event, context) {
     };
     response = await fetch(trafficAdviceURL, { headers, redirect: "manual", signal });
   } catch (e) {
-    return jsonResponse({ error: "unreachable" });
+    throw e;
+    return jsonResponse({ error: "unreachable " });
   }
 
   // Start gathering info to return to the client.
