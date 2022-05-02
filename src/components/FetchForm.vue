@@ -3,8 +3,6 @@ import { reactive } from 'vue';
 import { decode as decodeBase64 } from 'base64-arraybuffer';
 import OriginField from './OriginField.vue'
 
-const props = defineProps(["origin"]);
-
 const DEFAULT_STATE = {
   status: "blank",
   googleP3: null,
@@ -14,7 +12,7 @@ const DEFAULT_STATE = {
   decodeIssue: null,
   abortController: null,
 };
-const state = reactive({...DEFAULT_STATE});
+const state = reactive({origin: "", ...DEFAULT_STATE});
 
 async function fetchTrafficAdvice(e) {
   e.preventDefault();
@@ -28,7 +26,7 @@ async function fetchTrafficAdvice(e) {
   let headers;
   try {
     state.status = "loading";
-    let response = await fetch(`/.netlify/functions/fetch?origin=${encodeURIComponent(props.origin)}`, {signal});
+    let response = await fetch(`/.netlify/functions/fetch?origin=${encodeURIComponent(state.origin)}`, {signal});
     if (!response.ok) {
       if (signal.aborted) return;
       state.status = error;
@@ -112,7 +110,7 @@ async function fetchTrafficAdvice(e) {
   let googleP3Fraction;
   let googleP3Entry;
 
-  if (!props.origin.startsWith('https:')) {
+  if (!state.origin.startsWith('https:')) {
     googleP3Outcome = "not-https";
     googleP3EAPFraction = googleP3Fraction = 0;
   } else if (state.fetchIssue) {
@@ -172,21 +170,12 @@ async function fetchTrafficAdvice(e) {
     fraction: googleP3Fraction,
     entry: googleP3Entry,
   };
-  // 429/503 retry-after
-  // redirects
-  // other non-ok status
-  // null body status
-  // wrong mime type
-  // utf-8 error
-  // JSON parse error
-  // not a list
-  // no matching agent selector
 }
 </script>
 
 <template>
   <form spellcheck="false">
-    <OriginField v-model="origin" />
+    <OriginField v-model="state.origin" />
     <button @click="fetchTrafficAdvice">Check</button>
   </form>
   <div v-if="state.status == 'loading'" class="loading">Loading&hellip;</div>

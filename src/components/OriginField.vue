@@ -10,7 +10,6 @@ function emitValue(e) {
     value = new URL(value).origin;
     if (value !== 'null') {
       e.target.value = value;
-      emit("update:modelValue", value);
     }
   } catch (err) {}
   emit("update:modelValue", e.target.value);
