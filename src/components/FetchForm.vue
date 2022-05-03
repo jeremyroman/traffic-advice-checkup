@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
   fetchIssue: null,
   statusIssue: null,
   mimeIssue: null,
-  decodeIssue: null,
+  parseIssue: null,
   abortController: null,
 };
 const state = reactive({origin: "", ...DEFAULT_STATE});
@@ -209,13 +209,13 @@ async function fetchTrafficAdvice(e) {
   <div v-if="state.mimeIssue" class="analysis analysis-error"><div>
     The response needed to have the MIME type <code>application/trafficadvice+json</code>, but the essence found was <code>{{state.mimeIssue.essence}}</code>. This was parsed from the <code>Content-Type</code> header, <code>{{state.mimeIssue.contentType}}</code>.
   </div></div>
-  <div v-if="state.parseIssue?.type == 'invalid-utf8'" class="analysis analysis-error"><div>
+  <div v-if="state.parseIssue == 'invalid-utf8'" class="analysis analysis-error"><div>
     The response was not valid UTF-8.
   </div></div>
-  <div v-if="state.parseIssue?.type == 'invalid-json'" class="analysis analysis-error"><div>
+  <div v-if="state.parseIssue == 'invalid-json'" class="analysis analysis-error"><div>
     The response was not valid JSON.
   </div></div>
-  <div v-if="state.parseIssue?.type == 'not-array'" class="analysis analysis-error"><div>
+  <div v-if="state.parseIssue == 'not-array'" class="analysis analysis-error"><div>
     The response was valid JSON, but must be an array.
   </div></div>
   <template v-if="state.googleP3">
