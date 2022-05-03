@@ -128,9 +128,9 @@ async function fetchTrafficAdvice(e) {
       if (entry.user_agent === "Chrome Privacy Preserving Prefetch Proxy" ||
           entry.user_agent === "prefetch-proxy" ||
           entry.user_agent === "*") {
-        if (entry.disallowed === true) {
+        if (entry.disallow === true) {
           googleP3Fraction = googleP3EAPFraction = 0;
-        } else if (entry.disallowed === false) {
+        } else if (entry.disallow === false) {
           googleP3Fraction = googleP3EAPFraction = 1;
         } else {
           googleP3EAPFraction = 0;
