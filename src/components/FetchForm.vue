@@ -256,6 +256,7 @@ input {
   padding: 0.3em 0.5em;
   font-size: 1.5em;
   outline: none;
+  width: 0;
   flex: 1;
 }
 
@@ -317,6 +318,10 @@ h2 {
   text-align: center;
 }
 
+@media (max-width: 500px) {
+  h2 { font-size: 1.2em; }
+}
+
 .fractions {
   display: flex;
   justify-content: center;
@@ -329,6 +334,9 @@ h2 {
 .fraction {
   margin: 0 2em;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .fraction span {
@@ -349,6 +357,7 @@ h2 {
   background: var(--color-background-soft);
   border: 1px solid var(--color-border);
   padding: 1em;
+  overflow: auto;
 }
 
 .loading {

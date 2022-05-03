@@ -21,4 +21,8 @@ header {
   text-align: center;
   margin-bottom: 1em;
 }
+
+@media (max-width: 500px) {
+  header { font-size: 1.5em; }
+}
 </style>
