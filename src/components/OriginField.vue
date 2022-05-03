@@ -17,5 +17,5 @@ function emitValue(e) {
 </script>
 
 <template>
-  <input :value="modelValue" @change="emitValue">
+  <input :value="modelValue" @change="emitValue" aria-label="Web site origin" placeholder="https://www.example.com">
 </template>
