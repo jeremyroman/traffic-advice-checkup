@@ -140,6 +140,9 @@ async function fetchTrafficAdvice(e) {
         if (typeof entry.google_prefetch_proxy_eap?.fraction === "number") {
           googleP3EAPFraction = entry.google_prefetch_proxy_eap.fraction;
         }
+        if (typeof entry.fraction === "number") {
+          googleP3EAPFraction = googleP3Fraction = entry.fraction;
+        }
         googleP3Entry = entry;
         break;
       }
